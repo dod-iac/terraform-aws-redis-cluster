@@ -18,6 +18,7 @@
  * module "redis_cluster" {
  *   source = "dod-iac/redis-cluster/aws"
  *
+ *   ingress_cidr_blocks  = ["0.0.0.0/0"]
  *   replication_group_id = format("test-%s", var.test_name)
  *   subnet_group_name    = module.vpc.elasticache_subnet_group_name
  *   vpc_id               = module.vpc.vpc_id
@@ -48,12 +49,33 @@ resource "aws_security_group" "main" {
   tags        = var.tags
   vpc_id      = var.vpc_id
 
+}
+
+resource "aws_security_group_rule" "ingress_cidr_blocks" {
+  count = length(var.ingress_cidr_blocks) > 0 ? 1 : 0
+
   ingress {
     from_port   = var.port
     to_port     = var.port
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = var.security_group_ingress_cidr_blocks
   }
+
+}
+
+resource "aws_security_group_rule" "ingress_security_groups" {
+  count = length(var.ingress_security_groups)
+
+  ingress {
+    from_port   = var.port
+    to_port     = var.port
+    protocol    = "tcp"
+    source_security_group_id = var.ingress_security_groups[count.index]
+  }
+
+}
+
+resource "aws_security_group_rule" "egress" {
 
   egress {
     from_port   = 0
