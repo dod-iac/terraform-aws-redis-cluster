@@ -54,6 +54,7 @@ resource "aws_security_group" "main" {
 resource "aws_security_group_rule" "ingress_cidr_blocks" {
   count = length(var.ingress_cidr_blocks) > 0 ? 1 : 0
 
+  security_group_id        = aws_security_group.main.id
   type        = "ingress"
   from_port   = var.port
   to_port     = var.port
@@ -64,6 +65,7 @@ resource "aws_security_group_rule" "ingress_cidr_blocks" {
 resource "aws_security_group_rule" "ingress_security_groups" {
   count = length(var.ingress_security_groups)
 
+  security_group_id        = aws_security_group.main.id
   type                     = "ingress"
   from_port                = var.port
   to_port                  = var.port
@@ -72,11 +74,12 @@ resource "aws_security_group_rule" "ingress_security_groups" {
 }
 
 resource "aws_security_group_rule" "egress" {
-  type        = "egress"
-  from_port   = 0
-  to_port     = 0
-  protocol    = "-1"
-  cidr_blocks = ["0.0.0.0/0"]
+  security_group_id = aws_security_group.main.id
+  type              = "egress"
+  from_port         = 0
+  to_port           = 0
+  protocol          = "-1"
+  cidr_blocks       = ["0.0.0.0/0"]
 }
 
 resource "aws_elasticache_replication_group" "main" {
