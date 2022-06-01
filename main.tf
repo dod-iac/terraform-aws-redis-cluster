@@ -36,6 +36,12 @@
  *
  * Terraform 0.11 and 0.12 are not supported.
  *
+ * ## Upgrade Notes
+ *
+ * ### 1.0.x to 1.1.x
+ *
+ * In 1.1.x, the cluster no longer allows ingress by default.  Allow ingress for all connections in the subnet by setting `ingress_cidr_blocks` to `["0.0.0.0/0"]`.
+ *
  * ## License
  *
  * This project constitutes a work of the United States Government and is not subject to domestic copyright protection under 17 USC § 105.  However, because the project utilizes code licensed from contributors and other third parties, it therefore is licensed under the MIT License.  See LICENSE file for more information.
@@ -59,17 +65,17 @@ resource "aws_security_group_rule" "ingress_cidr_blocks" {
   to_port           = var.port
   protocol          = "tcp"
 
-  cidr_blocks       = var.ingress_cidr_blocks
+  cidr_blocks = var.ingress_cidr_blocks
 }
 
 resource "aws_security_group_rule" "ingress_security_groups" {
   count = length(var.ingress_security_groups)
 
-  security_group_id        = aws_security_group.main.id
-  type                     = "ingress"
-  from_port                = var.port
-  to_port                  = var.port
-  protocol                 = "tcp"
+  security_group_id = aws_security_group.main.id
+  type              = "ingress"
+  from_port         = var.port
+  to_port           = var.port
+  protocol          = "tcp"
 
   source_security_group_id = var.ingress_security_groups[count.index]
 }
@@ -81,7 +87,7 @@ resource "aws_security_group_rule" "egress" {
   to_port           = 0
   protocol          = "-1"
 
-  cidr_blocks       = ["0.0.0.0/0"]
+  cidr_blocks = ["0.0.0.0/0"]
 }
 
 resource "aws_elasticache_replication_group" "main" {
