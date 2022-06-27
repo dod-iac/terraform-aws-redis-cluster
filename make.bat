@@ -1,5 +1,12 @@
 @echo off
 
+rem # =================================================================
+rem #
+rem # Work of the U.S. Department of Defense, Defense Digital Service.
+rem # Released as open source under the MIT License.  See LICENSE file.
+rem #
+rem # =================================================================
+
 rem isolate changes to local environment
 setlocal
 
@@ -21,7 +28,7 @@ if [%1]==[] (
   exit /B 1
 )
 
-REM remove bin and mnt directories
+REM remove bin directory
 
 if %1%==clean (
 
@@ -59,19 +66,7 @@ if %1%==update_docs (
     exit /B 1
   )
 
-
-  terraform-docs markdown . > README.md
-  echo|set /p="<!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->" > TMP_README.md
-  cmd /c exit 10
-  echo. >> TMP_README.md
-  type README.md >> TMP_README.md
-  echo|set /p="<!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->" >> TMP_README.md
-  cmd /c exit 10
-  echo. >> TMP_README.md
-  del README.md
-  ren TMP_README.md README.md
-
-  echo|set /p="BUG: README.md now includes windows new lines.  Please convert file to linux new lines using your editor."
+  powershell "%~dp0scripts\update-readme-windows.ps1"
 
   exit /B 0
 )
