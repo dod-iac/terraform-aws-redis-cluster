@@ -4,6 +4,18 @@ variable "apply_immediately" {
   default     = true
 }
 
+variable "ingress_cidr_blocks" {
+  type        = list(string)
+  description = "A list of CIDR blocks to allow access to the Redis cluster.  Use [\"0.0.0.0/0\"] to allow all connections within the subnet group."
+  default     = []
+}
+
+variable "ingress_security_groups" {
+  type        = list(string)
+  description = "A list of EC2 security groups to allow access to the Redis cluster."
+  default     = []
+}
+
 variable "number_cache_clusters" {
   type        = number
   description = "The number of cache clusters (primary and replicas) this replication group will have. If Multi-AZ is enabled, the value of this parameter must be at least 2. Updates will occur before other modifications."

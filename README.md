@@ -18,6 +18,7 @@ module "vpc" {
 module "redis_cluster" {
   source = "dod-iac/redis-cluster/aws"
 
+  ingress_cidr_blocks  = ["0.0.0.0/0"]
   replication_group_id = format("test-%s", var.test_name)
   subnet_group_name    = module.vpc.elasticache_subnet_group_name
   vpc_id               = module.vpc.vpc_id
@@ -34,6 +35,12 @@ Run all terratest tests using the `terratest` script.  If using `aws-vault`, you
 Terraform 0.13. Pin module version to ~> 1.0.0 . Submit pull-requests to main branch.
 
 Terraform 0.11 and 0.12 are not supported.
+
+## Upgrade Notes
+
+### 1.0.x to 1.1.x
+
+In 1.1.x, the cluster no longer allows ingress by default.  Allow ingress for all connections in the subnet by setting `ingress_cidr_blocks` to `["0.0.0.0/0"]`.
 
 ## License
 
@@ -62,6 +69,9 @@ No modules.
 |------|------|
 | [aws_elasticache_replication_group.main](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/elasticache_replication_group) | resource |
 | [aws_security_group.main](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group) | resource |
+| [aws_security_group_rule.egress](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group_rule) | resource |
+| [aws_security_group_rule.ingress_cidr_blocks](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group_rule) | resource |
+| [aws_security_group_rule.ingress_security_groups](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group_rule) | resource |
 | [aws_region.current](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/region) | data source |
 
 ## Inputs
@@ -69,6 +79,8 @@ No modules.
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_apply_immediately"></a> [apply\_immediately](#input\_apply\_immediately) | Specifies whether any modifications are applied immediately, or during the next maintenance window. | `bool` | `true` | no |
+| <a name="input_ingress_cidr_blocks"></a> [ingress\_cidr\_blocks](#input\_ingress\_cidr\_blocks) | A list of CIDR blocks to allow access to the Redis cluster.  Use ["0.0.0.0/0"] to allow all connections within the subnet group. | `list(string)` | `[]` | no |
+| <a name="input_ingress_security_groups"></a> [ingress\_security\_groups](#input\_ingress\_security\_groups) | A list of EC2 security groups to allow access to the Redis cluster. | `list(string)` | `[]` | no |
 | <a name="input_node_type"></a> [node\_type](#input\_node\_type) | The instance class to be used. | `string` | `"cache.m5.large"` | no |
 | <a name="input_number_cache_clusters"></a> [number\_cache\_clusters](#input\_number\_cache\_clusters) | The number of cache clusters (primary and replicas) this replication group will have. If Multi-AZ is enabled, the value of this parameter must be at least 2. Updates will occur before other modifications. | `number` | `2` | no |
 | <a name="input_port"></a> [port](#input\_port) | The port number on which each of the cache nodes will accept connections. | `number` | `6379` | no |
