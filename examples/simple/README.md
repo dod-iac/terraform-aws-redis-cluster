@@ -26,7 +26,7 @@ No requirements.
 | Name | Source | Version |
 |------|--------|---------|
 | <a name="module_redis_cluster_index"></a> [redis\_cluster\_index](#module\_redis\_cluster\_index) | ../../ | n/a |
-| <a name="module_vpc"></a> [vpc](#module\_vpc) | terraform-aws-modules/vpc/aws | 3.7.0 |
+| <a name="module_vpc"></a> [vpc](#module\_vpc) | terraform-aws-modules/vpc/aws | 3.14.2 |
 
 ## Resources
 

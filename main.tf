@@ -6,7 +6,7 @@
  * ```hcl
  * module "vpc" {
  *   source  = "terraform-aws-modules/vpc/aws"
- *   version = "3.7.0"
+ *   version = "3.14.2"
  *
  *   ...
  *   create_elasticache_subnet_group = true
