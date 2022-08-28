@@ -5,7 +5,7 @@ variable "apply_immediately" {
 }
 
 variable "description" {
-  type        = bool
+  type        = string
   description = "The description of the replication group used by the Redis cluster."
   default     = "A Redis cluster on Amazon ElastiCache."
 }

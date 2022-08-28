@@ -79,7 +79,7 @@ No modules.
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_apply_immediately"></a> [apply\_immediately](#input\_apply\_immediately) | Specifies whether any modifications are applied immediately, or during the next maintenance window. | `bool` | `true` | no |
-| <a name="input_description"></a> [description](#input\_description) | The description of the replication group used by the Redis cluster. | `bool` | `"A Redis cluster on Amazon ElastiCache."` | no |
+| <a name="input_description"></a> [description](#input\_description) | The description of the replication group used by the Redis cluster. | `string` | `"A Redis cluster on Amazon ElastiCache."` | no |
 | <a name="input_ingress_cidr_blocks"></a> [ingress\_cidr\_blocks](#input\_ingress\_cidr\_blocks) | A list of CIDR blocks to allow access to the Redis cluster.  Use ["0.0.0.0/0"] to allow all connections within the subnet group. | `list(string)` | `[]` | no |
 | <a name="input_ingress_security_groups"></a> [ingress\_security\_groups](#input\_ingress\_security\_groups) | A list of EC2 security groups to allow access to the Redis cluster. | `list(string)` | `[]` | no |
 | <a name="input_node_type"></a> [node\_type](#input\_node\_type) | The instance class to be used. | `string` | `"cache.m5.large"` | no |
