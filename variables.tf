@@ -4,6 +4,12 @@ variable "apply_immediately" {
   default     = true
 }
 
+variable "description" {
+  type        = bool
+  description = "The description of the replication group used by the Redis cluster."
+  default     = "A Redis cluster on Amazon ElastiCache."
+}
+
 variable "ingress_cidr_blocks" {
   type        = list(string)
   description = "A list of CIDR blocks to allow access to the Redis cluster.  Use [\"0.0.0.0/0\"] to allow all connections within the subnet group."

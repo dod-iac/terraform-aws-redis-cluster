@@ -99,19 +99,21 @@ resource "aws_elasticache_replication_group" "main" {
     0,
     var.number_cache_clusters
   )
-  multi_az_enabled              = true
-  node_type                     = var.node_type
-  number_cache_clusters         = var.number_cache_clusters
-  parameter_group_name          = "default.redis6.x"
-  port                          = var.port
-  replication_group_id          = var.replication_group_id
-  replication_group_description = "Replication group for the index of raw files"
-  security_group_ids            = [aws_security_group.main.id]
-  subnet_group_name             = var.subnet_group_name
-  tags                          = var.tags
-  transit_encryption_enabled    = true
+  description                = var.description
+  multi_az_enabled           = true
+  node_type                  = var.node_type
+  num_cache_clusters         = var.number_cache_clusters
+  parameter_group_name       = "default.redis6.x"
+  port                       = var.port
+  replication_group_id       = var.replication_group_id
+  security_group_ids         = [aws_security_group.main.id]
+  subnet_group_name          = var.subnet_group_name
+  tags                       = var.tags
+  transit_encryption_enabled = true
 
   lifecycle {
-    ignore_changes = [number_cache_clusters]
+    ignore_changes = [
+      num_cache_clusters
+    ]
   }
 }
