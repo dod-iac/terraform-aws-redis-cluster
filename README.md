@@ -40,7 +40,7 @@ Terraform 0.11 and 0.12 are not supported.
 
 ### 1.1.x to 1.2.x
 
-In 1.2.x, the constraint for the AWS provider is updated to `>= 4.0.0, < 5.0` because of renaming of resource variables.
+In 1.2.x, the constraint for the AWS provider is updated to `>= 4.0.0, < 5.0` because of renaming of resource arguments.
 
 ### 1.0.x to 1.1.x
 
