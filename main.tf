@@ -32,11 +32,15 @@
  *
  * ## Terraform Version
  *
- * Terraform 0.13. Pin module version to ~> 1.0.0 . Submit pull-requests to main branch.
+ * Terraform 0.13. Pin module version to ~> 1.2.0 . Submit pull-requests to main branch.
  *
  * Terraform 0.11 and 0.12 are not supported.
  *
  * ## Upgrade Notes
+ *
+ * ### 1.1.x to 1.2.x
+ *
+ * In 1.2.x, the constraint for the AWS provider is updated to `>= 4.0.0, < 5.0` because of renaming of resource variables.
  *
  * ### 1.0.x to 1.1.x
  *
