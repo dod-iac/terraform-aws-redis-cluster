@@ -6,7 +6,7 @@
  * ```hcl
  * module "vpc" {
  *   source  = "terraform-aws-modules/vpc/aws"
- *   version = "3.7.0"
+ *   version = "3.14.2"
  *
  *   ...
  *   create_elasticache_subnet_group = true
@@ -32,11 +32,15 @@
  *
  * ## Terraform Version
  *
- * Terraform 0.13. Pin module version to ~> 1.0.0 . Submit pull-requests to main branch.
+ * Terraform 0.13. Pin module version to ~> 1.2.0 . Submit pull-requests to main branch.
  *
  * Terraform 0.11 and 0.12 are not supported.
  *
  * ## Upgrade Notes
+ *
+ * ### 1.1.x to 1.2.x
+ *
+ * In 1.2.x, the constraint for the AWS provider is updated to `>= 4.0.0, < 5.0` because of renaming of resource arguments.
  *
  * ### 1.0.x to 1.1.x
  *
@@ -99,19 +103,21 @@ resource "aws_elasticache_replication_group" "main" {
     0,
     var.number_cache_clusters
   )
-  multi_az_enabled              = true
-  node_type                     = var.node_type
-  number_cache_clusters         = var.number_cache_clusters
-  parameter_group_name          = "default.redis6.x"
-  port                          = var.port
-  replication_group_id          = var.replication_group_id
-  replication_group_description = "Replication group for the index of raw files"
-  security_group_ids            = [aws_security_group.main.id]
-  subnet_group_name             = var.subnet_group_name
-  tags                          = var.tags
-  transit_encryption_enabled    = true
+  description                = var.description
+  multi_az_enabled           = true
+  node_type                  = var.node_type
+  num_cache_clusters         = var.number_cache_clusters
+  parameter_group_name       = "default.redis6.x"
+  port                       = var.port
+  replication_group_id       = var.replication_group_id
+  security_group_ids         = [aws_security_group.main.id]
+  subnet_group_name          = var.subnet_group_name
+  tags                       = var.tags
+  transit_encryption_enabled = true
 
   lifecycle {
-    ignore_changes = [number_cache_clusters]
+    ignore_changes = [
+      num_cache_clusters
+    ]
   }
 }

@@ -6,7 +6,7 @@ Creates a Elasticache Redis cluster.
 ```hcl
 module "vpc" {
   source  = "terraform-aws-modules/vpc/aws"
-  version = "3.7.0"
+  version = "3.14.2"
 
   ...
   create_elasticache_subnet_group = true
@@ -32,11 +32,15 @@ Run all terratest tests using the `terratest` script.  If using `aws-vault`, you
 
 ## Terraform Version
 
-Terraform 0.13. Pin module version to ~> 1.0.0 . Submit pull-requests to main branch.
+Terraform 0.13. Pin module version to ~> 1.2.0 . Submit pull-requests to main branch.
 
 Terraform 0.11 and 0.12 are not supported.
 
 ## Upgrade Notes
+
+### 1.1.x to 1.2.x
+
+In 1.2.x, the constraint for the AWS provider is updated to `>= 4.0.0, < 5.0` because of renaming of resource arguments.
 
 ### 1.0.x to 1.1.x
 
@@ -51,13 +55,13 @@ This project constitutes a work of the United States Government and is not subje
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 0.13 |
-| <a name="requirement_aws"></a> [aws](#requirement\_aws) | ~> 3.0 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 4.0.0, < 5.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | ~> 3.0 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 4.0.0, < 5.0 |
 
 ## Modules
 
@@ -79,6 +83,7 @@ No modules.
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_apply_immediately"></a> [apply\_immediately](#input\_apply\_immediately) | Specifies whether any modifications are applied immediately, or during the next maintenance window. | `bool` | `true` | no |
+| <a name="input_description"></a> [description](#input\_description) | The description of the replication group used by the Redis cluster. | `string` | `"A Redis cluster on Amazon ElastiCache."` | no |
 | <a name="input_ingress_cidr_blocks"></a> [ingress\_cidr\_blocks](#input\_ingress\_cidr\_blocks) | A list of CIDR blocks to allow access to the Redis cluster.  Use ["0.0.0.0/0"] to allow all connections within the subnet group. | `list(string)` | `[]` | no |
 | <a name="input_ingress_security_groups"></a> [ingress\_security\_groups](#input\_ingress\_security\_groups) | A list of EC2 security groups to allow access to the Redis cluster. | `list(string)` | `[]` | no |
 | <a name="input_node_type"></a> [node\_type](#input\_node\_type) | The instance class to be used. | `string` | `"cache.m5.large"` | no |
