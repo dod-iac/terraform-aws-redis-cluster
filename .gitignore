@@ -13,6 +13,7 @@ env.local.ps1
 terraform.tfstate
 terraform.tfstate.backup
 terraform.tfstate.*.backup
+terraform.tfstate.lock.info
 
 # miscellaneous
 .DS_Store
