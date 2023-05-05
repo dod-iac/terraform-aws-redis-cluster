@@ -20,7 +20,7 @@ PATH=%~dp0bin;%PATH%
 
 rem set common variables for targets
 
-set "USAGE=Usage: %~n0 [clean|format_terraform|update_docs|help]"
+set "USAGE=Usage: %~n0 [clean|format_terraform|fmt|help|imports|staticcheck|tidy|update_docs]"
 
 rem if no target, then print usage and exit
 if [%1]==[] (
@@ -46,15 +46,55 @@ if %1%==format_terraform (
     exit /B 1
   )
 
-  terraform fmt
+  powershell "%~dp0powershell\format-terraform.ps1"
 
-  for /R "%~dp0examples" %%e in (.) do (
-    if exist %%e\main.tf (
-      pushd %%e
-      terraform fmt
-      popd
-    )
+  exit /B 0
+)
+
+if %1%==fmt (
+
+  go fmt ./test ./pkg/tools
+
+  exit /B 0
+)
+
+if %1%==help (
+  echo|set /p="%USAGE%"
+  exit /B 1
+)
+
+if %1%==imports (
+
+  if not exist "%~dp0bin\goimports.exe" (
+    go build -o bin/goimports.exe golang.org/x/tools/cmd/goimports
   )
+
+  .\bin\goimports.exe -w -local github.com/gruntwork-io/terratest,github.com/aws/aws-sdk-go,github.com/dod-iac ./test ./pkg/tools
+
+  exit /B 0
+)
+
+if %1%==staticcheck (
+
+  if not exist "%~dp0bin\staticcheck.exe" (
+    go build -o bin/staticcheck.exe honnef.co/go/tools/cmd/staticcheck
+  )
+
+  .\bin\staticcheck.exe -checks all ./test
+
+  exit /B 0
+)
+
+if %1%==terratest (
+
+  call "%~dp0terratest.bat"
+
+  exit /B 0
+)
+
+if %1%==tidy (
+
+  go mod tidy
 
   exit /B 0
 )
@@ -66,22 +106,9 @@ if %1%==update_docs (
     exit /B 1
   )
 
-  powershell "%~dp0scripts\update-readme-windows.ps1"
-
-  for /R "%~dp0examples" %%e in (.) do (
-    if exist %%e\main.tf (
-      pushd %%e
-      powershell "%~dp0scripts\update-readme-windows.ps1"
-      popd
-    )
-  )
+  powershell "%~dp0powershell\update-docs.ps1"
 
   exit /B 0
-)
-
-if %1%==help (
-  echo|set /p="%USAGE%"
-  exit /B 1
 )
 
 echo|set /p="%USAGE%"

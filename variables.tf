@@ -39,6 +39,12 @@ variable "replication_group_id" {
   description = "The replication group identifier. This parameter is stored as a lowercase string."
 }
 
+variable "parameter_group_name" {
+  type        = string
+  description = "Name of the parameter group to associate with the replication group."
+  default     = "default.redis7"
+}
+
 variable "port" {
   type        = number
   description = "The port number on which each of the cache nodes will accept connections."
