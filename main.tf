@@ -107,7 +107,7 @@ resource "aws_elasticache_replication_group" "main" {
   multi_az_enabled           = true
   node_type                  = var.node_type
   num_cache_clusters         = var.number_cache_clusters
-  parameter_group_name       = "default.redis6.x"
+  parameter_group_name       = var.parameter_group_name
   port                       = var.port
   replication_group_id       = var.replication_group_id
   security_group_ids         = [aws_security_group.main.id]
